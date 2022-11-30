@@ -8,6 +8,7 @@ namespace RADER.Models
     public partial class RADERContext : DbContext
     {
         public RADERContext()
+            
         {
         }
 
@@ -25,6 +26,8 @@ namespace RADER.Models
         public virtual DbSet<Perfil> Perfils { get; set; } = null!;
         public virtual DbSet<Sugerencium> Sugerencia { get; set; } = null!;
         public virtual DbSet<Usuario> Usuario { get; set; } = null!;
+
+        public virtual DbSet<Archivos> Archivos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -253,6 +256,31 @@ namespace RADER.Models
                     .HasMaxLength(60)
                     .IsUnicode(false)
                     .HasColumnName("nombre_usuario");
+
+            });
+            modelBuilder.Entity<Archivos>(entity =>
+            {
+                entity.HasKey(e => e.IdArchivo);
+
+                entity.ToTable("Archivos");
+
+                entity.Property(e => e.IdArchivo).HasColumnName("id_archivo");
+
+                entity.Property(e => e.NombreArchivo)
+                    .HasMaxLength(50)
+                    .HasColumnName("nombre_archivo");
+
+                entity.Property(e => e.ExtensionArchivo)
+                    .HasMaxLength(10)
+                    .HasColumnName("extension_archivo");
+
+                entity.Property(e => e.CapacidadArchivo)
+                    .HasColumnType("float")
+                    .HasColumnName("capacidad_archivo");
+
+                entity.Property(e => e.UbicacionArchivo)
+                    .HasColumnType("text")
+                    .HasColumnName("ubicacion_archivo");
 
             });
 
